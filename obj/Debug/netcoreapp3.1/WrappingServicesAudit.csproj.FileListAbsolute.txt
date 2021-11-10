@@ -1,0 +1,16 @@
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\WrappingServicesAudit.exe
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\WrappingServicesAudit.deps.json
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\WrappingServicesAudit.runtimeconfig.json
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\WrappingServicesAudit.runtimeconfig.dev.json
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\WrappingServicesAudit.dll
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\WrappingServicesAudit.pdb
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\MihaZupan.HttpToSocks5Proxy.dll
+C:\Users\simux\Source\BTR\WrappingServicesAudit\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.csproj.AssemblyReference.cache
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.AssemblyInfoInputs.cache
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.AssemblyInfo.cs
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.csproj.CoreCompileInputs.cache
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.csproj.CopyComplete
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.dll
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.pdb
+C:\Users\simux\Source\BTR\WrappingServicesAudit\obj\Debug\netcoreapp3.1\WrappingServicesAudit.genruntimeconfig.cache
