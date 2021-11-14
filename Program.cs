@@ -6,7 +6,9 @@ namespace WrappingServicesAudit
     {
         static void Main(string[] args)
         {
-            Cosigner cosigner = new Cosigner();
+            BscanClient bscan = new BscanClient("EVI33RE8626MU3J2AEAB34RCBYWCTSX4EK", false);
+            Auditor auditor = new Auditor(bscan);
+            Cosigner cosigner = new Cosigner(auditor);
             cosigner.ProcessPendingTransactionsAsync().Wait();
         }
     }

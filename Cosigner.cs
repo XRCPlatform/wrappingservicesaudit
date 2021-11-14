@@ -7,6 +7,12 @@ namespace WrappingServicesAudit
 {
     public class Cosigner
     {
+        private readonly IAuditor auditor;
+        public Cosigner(IAuditor auditor)
+        {
+            this.auditor = auditor;
+        }
+
         public async Task ProcessPendingTransactionsAsync()
         {
             WrappingServicesClient wrappingClient = new WrappingServicesClient(false);
@@ -14,11 +20,15 @@ namespace WrappingServicesAudit
 
             foreach (var order in orders)
             {
-                var audit = Auditor.Audit(order);
+                var audit = await auditor.Audit(order);
                 if (audit.Status == AuditStatus.Approved)
                 {
                     //sign  transaction over blockore client
                     //post transaction back to W.S
+                }
+                else
+                {
+                    //what log?
                 }
             }
         }

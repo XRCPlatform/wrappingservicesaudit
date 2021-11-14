@@ -10,16 +10,13 @@ using System.Threading.Tasks;
 
 namespace WrappingServicesAudit
 {
-    public class WrappingServicesClient
+    public class WrappingServicesClient: WebApiClient
     {
-        
-        private static HttpClient _httpClient = null;
         private string uri = "https://xrcapi.wrapping.services/listPending";
-        private bool useTor;
-
-        public WrappingServicesClient(bool UseTor)
+    
+        public WrappingServicesClient(bool UseTor):base(UseTor)
         {
-            useTor = UseTor;
+            
         }
 
         public async Task<Order[]> GetPendingOrdersAsync()
@@ -36,34 +33,7 @@ namespace WrappingServicesAudit
             else
             {
                 throw new Exception($"Got http [{response.StatusCode}] calling {uri}, message {response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult()}");
-            }
-            
+            }            
         }
-
-        private HttpClient GetHttpClient(string uri)
-        {
-            if (_httpClient == null)
-            {
-                var handler = new HttpClientHandler { };
-                if (useTor)
-                {
-                    handler = new HttpClientHandler { 
-                        Proxy = new HttpToSocks5Proxy("127.0.0.1", 9050)
-                    };
-                }
-
-                HttpClient httpClient = new HttpClient(handler);
-                httpClient.BaseAddress = new Uri(uri);
-                httpClient.Timeout = TimeSpan.FromSeconds(30);
-                httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
-                {
-                    Public = true
-                };
-                _httpClient = httpClient;
-            }
-
-            return _httpClient;
-        }
-
     }
 }

@@ -2,6 +2,10 @@
 {
     public class Rule
     {
-        public string Description { get; set; }
+        public Rule(string description)
+        {
+            this.Description = description;
+        }
+        public string Description { get; }
     }
 }
