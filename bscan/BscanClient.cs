@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using WrappingServicesAudit.bscan;
 
@@ -20,6 +18,17 @@ namespace WrappingServicesAudit
         public async Task<Money> GetBalance(string Address)
         {
             string uri = $"https://api.bscscan.com/api?module=account&tag=latest&action=balance&address={Address}&apikey={apiKey}";
+            return await GetBalanceAction(uri).ConfigureAwait(false);
+        }
+
+        public async Task<Money> GetEaliestBalance(string Address)
+        {
+            string uri = $"https://api.bscscan.com/api?module=account&tag=earliest&action=balance&address={Address}&apikey={apiKey}";
+            return await GetBalanceAction(uri).ConfigureAwait(false);
+        }
+
+        private async Task<Money> GetBalanceAction(string uri)
+        {
             var httpClient = GetHttpClient(uri);
             var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri));
             if (response.IsSuccessStatusCode)
@@ -33,5 +42,6 @@ namespace WrappingServicesAudit
                 throw new Exception($"Got http [{response.StatusCode}] calling {uri}, message {response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult()}");
             }
         }
+
     }
 }

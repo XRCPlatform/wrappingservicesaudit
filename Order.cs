@@ -8,7 +8,7 @@ namespace WrappingServicesAudit
         public int Id { get; set; }
 
         [JsonProperty(PropertyName = "amount")]
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [JsonProperty(PropertyName = "userAddress")]
         public string UserAddress { get; set; }

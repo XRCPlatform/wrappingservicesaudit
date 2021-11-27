@@ -5,13 +5,10 @@ using System.Text;
 namespace WrappingServicesAudit
 {
 
-    public class DecodeRawXrcTransactionResult
+    public class DecodeRawXrcTransactionResponse
     {
         public XrcTransaction result { get; set; }
         public object error { get; set; }
-        public long id { get; set; }
+        public int id { get; set; }
     }
-
-   
-
 }

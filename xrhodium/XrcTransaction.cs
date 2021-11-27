@@ -29,7 +29,7 @@
 
         public class Vout
         {
-            public float value { get; set; }
+            public decimal value { get; set; }
             public int n { get; set; }
             public Scriptpubkey scriptPubKey { get; set; }
         }

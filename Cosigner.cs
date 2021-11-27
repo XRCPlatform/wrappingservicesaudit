@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -7,28 +8,45 @@ namespace WrappingServicesAudit
 {
     public class Cosigner
     {
-        private readonly IAuditor auditor;
-        public Cosigner(IAuditor auditor)
+        private readonly IAuditor _auditor;
+        private readonly IWrappingServicesClient _wrappingClient;
+        private readonly IxRhodiumClient _xRhodium;
+
+        public Cosigner(IAuditor auditor, IWrappingServicesClient wrappingClient, IxRhodiumClient xRhodiumlient)
         {
-            this.auditor = auditor;
+            this._auditor = auditor;
+            this._wrappingClient = wrappingClient;
+            this._xRhodium = xRhodiumlient;
         }
 
-        public async Task ProcessPendingTransactionsAsync()
+        public async Task ProcessPendingTransactionsAsync(string walletPassphrase)
         {
-            WrappingServicesClient wrappingClient = new WrappingServicesClient(false);
-            var orders = await wrappingClient.GetPendingOrdersAsync().ConfigureAwait(false);
-
+            var orders = await _wrappingClient.GetPendingOrdersAsync().ConfigureAwait(false);
             foreach (var order in orders)
             {
-                var audit = await auditor.Audit(order);
-                if (audit.Status == AuditStatus.Approved)
+                try
                 {
-                    //sign  transaction over blockore client
-                    //post transaction back to W.S
+                    var audit = await _auditor.Audit(order);
+                    if (audit.Status != AuditStatus.Approved)
+                    {
+                        var signed = await _xRhodium.SignWithMultisig(order.RawXRCTransaction, walletPassphrase);
+                        await _wrappingClient.PostSig(order, signed);
+                        await _wrappingClient.SendTx(order.OrderId);
+                        throw new Exception("THIS IS HACKED NOW");
+                    }
+                    else
+                    {
+                        foreach (var rule in audit.Failed)
+                        {
+                            Console.WriteLine($"{order.OrderId} failed {rule.Description}");
+                        }
+                        
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    //what log?
+                    Console.WriteLine($"{order.OrderId} failed with exception {ex}");
+                    
                 }
             }
         }

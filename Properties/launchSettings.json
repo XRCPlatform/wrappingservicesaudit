@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WrappingServicesAudit": {
+      "commandName": "Project",
+      "commandLineArgs": "XRhodiumWalletPassphrase=*** BscanApiKey=*** XRhodiumRpcUsername=*** XRhodiumRpcPassword=** XRhodiumServer=127.0.0.1 XRhodiumPort=16661"
+    }
+  }
+}
