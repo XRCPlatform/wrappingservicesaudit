@@ -17,13 +17,13 @@ namespace WrappingServicesAudit
 
         public async Task<Money> GetBalance(string Address)
         {
-            string uri = $"https://api.bscscan.com/api?module=account&tag=latest&action=balance&address={Address}&apikey={apiKey}";
+            string uri = $"https://api.bscscan.com/api?module=account&tag=latest&action=tokenbalance&address={Address}&contractaddress=0x8f0342bf1063b1d947b0f2cc611301d611ac3487&apikey={apiKey}";
             return await GetBalanceAction(uri).ConfigureAwait(false);
         }
 
         public async Task<Money> GetEaliestBalance(string Address)
         {
-            string uri = $"https://api.bscscan.com/api?module=account&tag=earliest&action=balance&address={Address}&apikey={apiKey}";
+            string uri = $"https://api.bscscan.com/api?module=account&tag=earliest&action=tokenbalance&address={Address}&contractaddress=0x8f0342bf1063b1d947b0f2cc611301d611ac3487&apikey={apiKey}";
             return await GetBalanceAction(uri).ConfigureAwait(false);
         }
 
@@ -35,7 +35,8 @@ namespace WrappingServicesAudit
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var balance = JsonConvert.DeserializeObject<GetBalanceResponse>(json);
-                return Money.Parse(balance.Result);
+                return Money.Satoshis(Decimal.Parse(balance.Result));
+                //return Money.Parse(balance.Result);
             }
             else
             {

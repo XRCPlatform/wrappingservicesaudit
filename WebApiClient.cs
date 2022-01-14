@@ -30,7 +30,7 @@ namespace WrappingServicesAudit
 
                 HttpClient httpClient = new HttpClient(handler);
                 httpClient.BaseAddress = new Uri(uri);
-                httpClient.Timeout = TimeSpan.FromSeconds(30);
+                httpClient.Timeout = TimeSpan.FromSeconds(1000);
                 httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
                 {
                     Public = true

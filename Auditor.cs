@@ -17,7 +17,7 @@ namespace WrappingServicesAudit
 
         public async Task<AuditResul> Audit(Order order)
         {
-            var balanceRule =  await AuditEnsureCurrentCoinsBurnedOnchain(order);
+            var balanceRule = await AuditEnsureCurrentCoinsBurnedOnchain(order);
             if (balanceRule.Status == AuditStatus.Approved)
             {
 
@@ -36,11 +36,12 @@ namespace WrappingServicesAudit
                             return xrcValueRule;
                         }
                         // ensure that bsc address got exact amout of wXRC coins deposited on start
-                        var startingBalanceRule =  await AuditStartingBalanceOnchain(order);
-                        if (startingBalanceRule.Status != AuditStatus.Approved)
-                        {
-                            return startingBalanceRule;
-                        }                            
+                        //this does not seem to be available in free api package for now i's not really necesary as we can asume it had right amount of coins deposited
+                        //var startingBalanceRule =  await AuditStartingBalanceOnchain(order);
+                        //if (startingBalanceRule.Status != AuditStatus.Approved)
+                        //{
+                        //    return startingBalanceRule;
+                        //}                            
                     }
                 }
             }

@@ -24,23 +24,32 @@ namespace WrappingServicesAudit
             var orders = await _wrappingClient.GetPendingOrdersAsync().ConfigureAwait(false);
             foreach (var order in orders)
             {
+                
                 try
                 {
-                    var audit = await _auditor.Audit(order);
-                    if (audit.Status != AuditStatus.Approved)
+                    //if (order.OrderId.Contains("ba87be2"))
+                    if (order.OrderId != null)// will never be 
                     {
-                        var signed = await _xRhodium.SignWithMultisig(order.RawXRCTransaction, walletPassphrase);
-                        await _wrappingClient.PostSig(order, signed);
-                        await _wrappingClient.SendTx(order.OrderId);
-                        throw new Exception("THIS IS HACKED NOW");
+                        Console.WriteLine($"Processing {order.OrderId}");
+                        var audit = await _auditor.Audit(order);
+                        if (audit.Status == AuditStatus.Approved)
+                        {
+                            var signed = await _xRhodium.SignWithMultisig(order.RawXRCTransaction, walletPassphrase);
+                            await _wrappingClient.PostSig(order, signed);
+                            await _wrappingClient.SendTx(order.OrderId);
+                        }
+                        else
+                        {
+                            foreach (var rule in audit.Failed)
+                            {
+                                Console.WriteLine($"{order.OrderId} failed {rule.Description}");
+                            }
+
+                        }
                     }
                     else
                     {
-                        foreach (var rule in audit.Failed)
-                        {
-                            Console.WriteLine($"{order.OrderId} failed {rule.Description}");
-                        }
-                        
+                        Console.WriteLine($"Skipping {order.OrderId}");
                     }
                 }
                 catch (Exception ex)
